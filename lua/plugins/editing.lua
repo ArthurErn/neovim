@@ -36,6 +36,19 @@ return {
       )
     end,
   },
+{
+  "folke/todo-comments.nvim",
+  dependencies = { "nvim-lua/plenary.nvim" },
+  opts = {
+    signs = true, -- mostra ícones na coluna
+    keywords = {
+      TODO = { icon = " ", color = "info" },
+      FIX = { icon = " ", color = "error", alt = { "FIXME", "BUG", "FIXIT", "ISSUE" } },
+      NOTE = { icon = " ", color = "hint", alt = { "INFO" } },
+    },
+  },
+  event = "BufReadPost",
+},
 
   -- Multi-cursor como VSCode
   {
