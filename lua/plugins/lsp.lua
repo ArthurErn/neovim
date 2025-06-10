@@ -42,7 +42,6 @@ return {
 {
   "glepnir/lspsaga.nvim",
   branch = "main",
-  tag = "v0.5.3",
   dependencies = {
     {"nvim-tree/nvim-web-devicons"},  -- ícones opcionais, mas recomendados
     {"nvim-treesitter/nvim-treesitter"}, -- para realce, opcional mas recomendado

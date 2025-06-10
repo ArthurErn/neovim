@@ -43,5 +43,18 @@ return {
       end, { desc = "Formatar arquivo com conform.nvim" })
     end,
   },
-
+  {
+  'wa11breaker/flutter-bloc.nvim',
+  dependencies = {
+    "nvimtools/none-ls.nvim",
+  },
+  ft = "dart",
+  config = function()
+    require('flutter-bloc').setup({
+      bloc_type = 'default',
+      use_sealed_classes = false,
+      enable_code_actions = true,
+    })
+  end,
+}
 }

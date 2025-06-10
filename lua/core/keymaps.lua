@@ -167,6 +167,20 @@ end, { noremap = true, silent = true })
   end,
 })
 
+-- Key mapping para rodar arquivo Flutter atual como main
 
+-- Função para executar arquivo Flutter atual
+local function run_current_flutter_file()
+  local current_file = vim.fn.expand('%:p')
+  local cmd = 'fvm flutter run ' .. current_file
+  print("Executando: " .. cmd)
+  
+  -- Abre terminal na parte inferior com 15 linhas de altura
+  vim.cmd('botright split | resize 15 | terminal ' .. cmd)
+end
 
-
+-- Key mapping
+vim.keymap.set('n', '<leader>rt', run_current_flutter_file, {
+  desc = 'Run current Flutter file as main',
+  silent = true
+})
