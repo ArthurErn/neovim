@@ -8,7 +8,7 @@ return {
    config = function()
      require("nvim-tree").setup {
 				filters = {
-    dotfiles = true,         -- mostra arquivos que começam com `.`, como `.env`
+    dotfiles = false,         -- mostra arquivos que começam com `.`, como `.env`
     git_ignored = false,      -- mostra arquivos que estão no .gitignore
   },
   update_focused_file = {
@@ -115,15 +115,18 @@ return {
    	 })
       end
     },
+
 {
   "projekt0n/github-nvim-theme",
+  name = 'github-theme',
   lazy = false,
   priority = 1000,
   config = function()
-    require("github-theme").setup({})
-    vim.cmd("colorscheme github_dark")
+    require('github-theme').setup({})
+    vim.cmd('colorscheme github_dark')
   end,
 },
+
 
 -- 🟥 DASHBOARD COM ASCII (Alpha)
 {
