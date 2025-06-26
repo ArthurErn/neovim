@@ -80,6 +80,11 @@ require("flutter-tools").setup({
       vim.keymap.set('n', '<leader>fR', "<cmd>FlutterRestart<CR>", { buffer = bufnr })
       vim.keymap.set('n', '<leader>fD', "<cmd>FlutterDevices<CR>", { buffer = bufnr })
       vim.keymap.set('n', '<leader>fo', "<cmd>FlutterOutlineToggle<CR>", { buffer = bufnr })
+
+      vim.keymap.set('n', '<leader>h', vim.lsp.buf.hover, { buffer = bufnr })         -- Mostrar documentação (hover)
+      vim.keymap.set('n', '<leader>fs', vim.lsp.buf.signature_help, { buffer = bufnr }) -- Mostrar assinatura da função
+      vim.keymap.set('n', '<leader>fd', vim.lsp.buf.definition, { buffer = bufnr })     -- Ir para definição
+
     end, 
     capabilities = capabilities,
     settings = {
@@ -144,4 +149,23 @@ vim.api.nvim_create_autocmd("FileType", {
 
     end
   },
+{
+  "kosayoda/nvim-lightbulb",
+  event = "LspAttach",
+  config = function()
+    -- Define o ícone da lâmpada no lado esquerdo da linha
+    vim.fn.sign_define("LightBulbSign", { text = "💡", texthl = "DiagnosticSignHint" })
+
+    require("nvim-lightbulb").setup({
+      autocmd = { enabled = true },
+      sign = {
+        enabled = true,
+        priority = 10,
+      },
+      virtual_text = {
+        enabled = true, -- Você pode colocar true aqui se quiser o 💡 inline
+      },
+    })
+  end,
+},
 }
