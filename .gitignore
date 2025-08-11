@@ -1,0 +1,45 @@
+# Logs e arquivos temporários
+*.log
+*.tmp
+*.swp
+*.swo
+*~
+
+# Arquivos de cache do Lazy
+lazy-lock.json
+
+# Diretórios de estado/sessão
+.nvim/
+session/
+sessions/
+.session
+
+# Arquivos específicos do usuário que podem conter caminhos pessoais
+**/local_config.lua
+**/user_config.lua
+**/personal_*.lua
+lua/plugins/test.lua
+
+# Arquivos de backup
+*.bak
+*.backup
+
+# Arquivos de undo persistente
+undo/
+undodir/
+
+# Shada/viminfo files
+*.shada
+.viminfo
+
+# Plugin data que pode conter dados pessoais
+plugin/packer_compiled.lua
+site/
+spell/
+
+# Arquivos de estado do Mason
+mason/
+
+# Arquivos de debug
+debug.log
+*.debug
