@@ -44,7 +44,10 @@ vim.api.nvim_set_keymap('v', '<S-Left>', '<Left>', { noremap = true, silent = tr
 vim.api.nvim_set_keymap('v', '<S-Right>', '<Right>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<S-Up>', '<Up>', { noremap = true, silent = true })
 vim.api.nvim_set_keymap('v', '<S-Down>', '<Down>', { noremap = true, silent = true })
-vim.api.nvim_set_keymap('n', '<C-M-f>', ':Telescope live_grep<CR>', { noremap = true, silent = true })
+-- Live grep com Ctrl+G (mais confiável)
+vim.keymap.set('n', '<C-g>', function()
+  require('telescope.builtin').live_grep()
+end, { noremap = true, silent = true, desc = "Live grep with Telescope" })
 vim.keymap.set('n', '<C-t>', function()
   vim.cmd('tabnew')
   vim.bo.buftype = 'nofile'
@@ -167,12 +170,15 @@ vim.api.nvim_create_autocmd('LspAttach', {
     
     -- Renomear símbolos
     vim.keymap.set('n', '<leader>rn', vim.lsp.buf.rename, { buffer = bufnr })
--- <C-p> com Telescope + NvimTree sincronizado
-local telescope_builtin = require("telescope.builtin")
-local telescope_actions = require("telescope.actions")
-local telescope_state = require("telescope.actions.state")
+  end,
+})
 
+-- <C-p> com Telescope + NvimTree sincronizado (require lazy)
 vim.keymap.set("n", "<C-p>", function()
+  local telescope_builtin = require("telescope.builtin")
+  local telescope_actions = require("telescope.actions")
+  local telescope_state = require("telescope.actions.state")
+
   telescope_builtin.find_files({
     attach_mappings = function(prompt_bufnr, map)
       local function open_and_sync_tree()
@@ -190,8 +196,6 @@ vim.keymap.set("n", "<C-p>", function()
     end
   })
 end, { noremap = true, silent = true })
-  end,
-})
 
 -- Key mapping para rodar arquivo Flutter atual como main
 

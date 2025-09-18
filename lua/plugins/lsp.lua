@@ -15,9 +15,9 @@ return {
       vim.api.nvim_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
       vim.api.nvim_set_keymap('i', '<C-k>', '<cmd>lua vim.lsp.buf.hover()<CR>', { noremap = true, silent = true })
 
-      -- Setup do Dart LSP
+      -- Setup do Dart LSP com FVM
       require('lspconfig').dartls.setup({
-	cmd = { "C:/tools/dart-sdk/bin/dart.exe", "language-server", "--protocol=lsp" },
+	cmd = { "fvm", "dart", "language-server", "--protocol=lsp" },
       })
 
       -- Gatilhos para autocompletion do Flutter/Dart

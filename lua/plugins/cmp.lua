@@ -21,11 +21,10 @@ return {
       },
       completion = {
         autocomplete = {
-          cmp.TriggerEvent.TextChanged,
           cmp.TriggerEvent.InsertEnter,
         },
         completeopt = 'menu,menuone,noinsert',
-        keyword_length = 1,
+        keyword_length = 2,
       },
       window = {
         completion = cmp.config.window.bordered(),
@@ -74,7 +73,7 @@ return {
         end,
       },
       experimental = {
-        ghost_text = true,
+        ghost_text = false,
       },
     })
   end

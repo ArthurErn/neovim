@@ -65,6 +65,10 @@ return {
     vim.keymap.set('n', '<leader>hh', function()
       harpoon.ui:toggle_quick_menu(harpoon:list())
     end, { desc = "Abrir menu rápido do Harpoon" })
+
+    vim.keymap.set('n', '<leader>hc', function()
+      harpoon:list():clear()
+    end, { desc = "Limpar lista do Harpoon" })
   end,
 },
 

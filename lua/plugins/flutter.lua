@@ -39,12 +39,10 @@ require("flutter-tools").setup({
     }
   },
   debugger = {
-    enabled = true,
-    run_via_dap = true,
+    enabled = false,
+    run_via_dap = false,
   },
-  flutter_path = "flutter", -- pode ser personalizado para o caminho do seu Flutter SDK
-  flutter_lookup_cmd = nil,
-  fvm = false, -- caso use o Flutter Version Management
+  fvm = true, -- caso use o Flutter Version Management
   widget_guides = {
     enabled = true,
   },
@@ -54,7 +52,6 @@ require("flutter-tools").setup({
     enabled = true
   },
   lsp = {
-    flutter_path = "C:\\src\\flutter\\bin\\flutter.bat",
     color = { -- mostrar cores nos arquivos
       enabled = false,
       background = true,
@@ -66,13 +63,19 @@ require("flutter-tools").setup({
       -- Habilitar autocompletion (descomentado e corrigido)
       vim.api.nvim_buf_set_option(bufnr, 'omnifunc', 'v:lua.vim.lsp.omnifunc')
       
-      -- Configuração específica para completar automaticamente após "." em Dart
-      vim.cmd([[
-        augroup DartOmniFunc
-          autocmd! * <buffer>
-          autocmd TextChangedI <buffer> lua require('cmp').complete({ reason = require('cmp').ContextReason.Auto })
-        augroup END
-      ]])
+      -- Configuração otimizada para sugestões após "." em Dart
+      vim.api.nvim_create_autocmd("TextChangedI", {
+        buffer = bufnr,
+        callback = function()
+          local line = vim.api.nvim_get_current_line()
+          local col = vim.api.nvim_win_get_cursor(0)[2]
+          if col > 0 and line:sub(col, col) == "." then
+            vim.schedule(function()
+              require('cmp').complete({ reason = require('cmp').ContextReason.TriggerCharacter })
+            end)
+          end
+        end
+      })
       
       -- Keymaps específicos para Flutter/Dart
       vim.keymap.set('n', '<leader>fr', "<cmd>FlutterRun<CR>", { buffer = bufnr })
@@ -126,16 +129,39 @@ require("flutter-tools").setup({
     }
   },
 })
--- LSP para Dart
-require('lspconfig').dartls.setup{}
+-- LSP para Dart - configuração automática para FVM/Flutter direto
+local function setup_dart_lsp()
+  local function file_exists(name)
+    local f = io.open(name, "r")
+    if f ~= nil then
+      io.close(f)
+      return true
+    else
+      return false
+    end
+  end
 
--- Gatilhos de autocompletion no Flutter
+  local cmd
+  if file_exists(".fvm/fvm_config.json") then
+    -- Usar FVM se projeto tem configuração FVM
+    cmd = { "fvm", "dart", "language-server", "--protocol=lsp" }
+  else
+    -- Tentar flutter direto se não tem FVM configurado
+    cmd = { "flutter", "dart", "language-server", "--protocol=lsp" }
+  end
+
+  require('lspconfig').dartls.setup{
+    cmd = cmd,
+  }
+end
+
+setup_dart_lsp()
+
+-- Gatilhos de autocompletion no Flutter (otimizados)
 vim.cmd([[
   augroup flutter_autocomplete
     autocmd!
     autocmd FileType dart inoremap <buffer> . .<C-x><C-o>
-    autocmd FileType dart inoremap <buffer> <space> <space><C-x><C-o>
-    autocmd FileType dart inoremap <buffer> ( (<C-x><C-o>
   augroup END
 ]])
 

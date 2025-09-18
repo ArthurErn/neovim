@@ -73,7 +73,7 @@ end
 -- Função para configuração
 function M.setup()
   vim.api.nvim_create_user_command("SideDashboard", M.open_side_dashboard, {})
-  vim.api.nvim_set_keymap('n', '<leader>h', ':SideDashboard<CR>', { noremap = true, silent = true })
+  -- Removido keybind <leader>h para evitar conflito com Harpoon
 end
 
 return M
